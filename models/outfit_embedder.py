@@ -1,28 +1,26 @@
-import os
-import numpy as np
 import pandas as pd
-import faiss
 
 def recommend_outfits(gender, style, top_k=9):
-    """Recommends outfits based on gender and style by FAISS similarity search."""
-    metadata = pd.read_csv("data/metadata.csv")
-    metadata = metadata[(metadata["gender"] == gender) & (metadata["style"] == style)]
+    """Recommends outfits based on gender and style by metadata filtering."""
+    # Map lowercase style (from UI) to capitalized style (in CSV)
+    style_map = {
+        "casual": "Casual",
+        "formal": "Formal",
+        "party": "Party"
+    }
 
-    if metadata.empty:
+    mapped_style = style_map.get(style.lower(), style)
+
+    metadata = pd.read_csv("data/metadata.csv")
+    filtered = metadata[(metadata["gender"] == gender) & (metadata["style"] == mapped_style)]
+
+    print("GENDER:", gender)
+    print("UI STYLE:", style)
+    print("MAPPED STYLE:", mapped_style)
+    print("Found outfits:", filtered.shape[0])
+
+    if filtered.empty:
         return []
 
-    # Load embeddings
-    embeddings = np.load("data/embeddings.npy").astype("float32")
-    faiss_index = faiss.IndexFlatL2(embeddings.shape[1])
-    faiss_index.add(embeddings)
-
-    # Dummy query vector (this should ideally be selfie embedding later)
-    query_vector = np.random.rand(embeddings.shape[1]).astype("float32")
-    _, indices = faiss_index.search(query_vector.reshape(1, -1), top_k)
-
-    recommended_paths = []
-    for idx in indices[0]:
-        if idx < len(metadata):
-            recommended_paths.append(metadata.iloc[idx]["filename"])
-
-    return recommended_paths
+    # Just return filenames for now (skip FAISS until verified)
+    return filtered["filename"].tolist()
