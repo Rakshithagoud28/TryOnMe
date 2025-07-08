@@ -6,5 +6,13 @@
     "style": "casual",
     "body_type": "Inverted Triangle",
     "skin_tone": "Fair"
+  },
+  {
+    "path": "data/images/MEN/Formal/img1.jpg",
+    "timestamp": "2025-07-08 15:51:21.551826",
+    "gender": "MEN",
+    "style": "formal",
+    "body_type": "Inverted Triangle",
+    "skin_tone": "Medium"
   }
 ]
