@@ -1,49 +1,38 @@
-# 👗 TryOnMe - AI-Powered Fashion Outfit Recommender
+# 👗 TryOnMe-Fashion — AI-Powered Fashion Outfit Recommender
+TryOnMe-Fashion is an AI fashion outfit recommender app using YOLOv8, Streamlit, and PyTorch. It detects gender from photos to suggest personalized outfits with virtual try-on features.
 
-TryOnMe is an AI-powered web app that recommends personalized outfits based on your selfie.  
-It analyzes **gender**, **body type**, **skin tone**, and your **style preferences** to suggest suitable outfits, allowing you to preview, try on, and save favorites.
-
----
-
-## 🚀 Features
-- 📸 Upload your selfie or full-body photo
-- 👤 Detects gender automatically
-- 🔍 Analyzes body type using pose estimation
-- 🎨 Detects skin tone from your photo
-- ✨ Outfit recommendations based on your style preference (casual, formal, party)
-- 🧥 Virtual Try-On: Overlay selected outfits on your image
-- ❤️ Like and save favorite outfits
 
 ---
 
-## 🧰 Tech Stack
-- **Languages:** Python
-- **AI & CV:** OpenCV, MediaPipe, CLIP, ResNet, FAISS
-- **Frameworks:** Streamlit
-- **Others:** Pillow, NumPy, Torch, Scikit-learn, DeepFashion Dataset
+## 🚀 Features:
+- ✅ Gender Detection (YOLOv8 custom model)
+- ✅ Body Type Estimation
+- ✅ Skin Tone Detection
+- ✅ Style-Based Outfit Recommendations (casual, formal, party)
+- ✅ Virtual Try-On (Outfit overlay on uploaded photo)
+- ✅ Save Favorite Outfits (Like Button)
 
 ---
 
-## 📂 Project Structure
-
-fashion-outfit-recommender/
-│
-├── app/ # Streamlit app logic
-│ ├── main.py # Main app flow
-│ └── state.py # App state management
-│
-├── data/ # Dataset & embeddings
-│ ├── images/ # Outfit images
-│ └── metadata.csv # Outfit metadata
-│
-├── models/ # Core detection and recommendation models
-│
-├── outputs/ # Saved user-liked outfits
-│
-├── scripts/ # Data preparation scripts
-│
+## 📦 Folder Structure:
+├── app/ # Streamlit app state logic
+├── data/ # Dataset & Outfit Images
+├── models/ # Models for gender, body, color, try-on, embedding
+├── outputs/ # Saved liked outfits (JSON)
+├── runs/ # YOLO training and predictions
+├── scripts/ # Helper scripts (dataset processing, embeddings, etc.)
+├── venv/ # Python Virtual Environment (ignored in .gitignore)
+├── yolov8n.pt # YOLOv8 base model
+├── README.md # Project documentation
 ├── requirements.txt # Project dependencies
-└── README.md # Project documentation
+├── main.py # Streamlit app entry point
+└── .gitignore # Ignored files
 
- 
-
+## 🧑‍💻 Tech Stack:
+- **Python 3.12**
+- **YOLOv8 (Ultralytics)**
+- **Torch (PyTorch)**
+- **Streamlit**
+- **OpenCV**
+- **Pillow (PIL)**
+- **MediaPipe (for body analysis)**
