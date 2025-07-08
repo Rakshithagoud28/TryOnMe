@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['MEN', 'WOMEN']
+
+roboflow:
+  workspace: rakshitha-fjfdq
+  project: gender-detection-j2clc
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/rakshitha-fjfdq/gender-detection-j2clc/dataset/1

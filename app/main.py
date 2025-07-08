@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 import streamlit as st
 from PIL import Image
+from ultralytics import YOLO  # ✅ NEW Import for YOLO Gender Detection
 
 # ✅ Fix for Torch + MediaPipe OpenMP conflict
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -15,11 +16,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # App logic imports
 from app.state import init_state, update_state
-from models.gender_classifier import detect_gender
 from models.body_analyzer import estimate_body_type
 from models.color_detector import detect_skin_tone
 from models.outfit_embedder import recommend_outfits
 from models.tryon_renderer import render_outfit
+
+# ✅ Load YOLOv8 Gender Detection Model
+gender_model = YOLO("models/gender_detector.pt")  # Make sure this file exists
 
 # Streamlit Config
 st.set_page_config(page_title="Fashion Outfit Recommender", layout="centered")
@@ -40,8 +43,14 @@ if uploaded:
     with col2:
         st.image(selfie_pil.resize((300, 400)), caption="Selfie Preview", use_container_width=True)
 
-    # 👤 Step 1: Detect Gender
-    gender = detect_gender(selfie_cv2)
+    # ✅ 👤 Step 1: Detect Gender (Using YOLO)
+    with st.spinner("Detecting Gender..."):
+        results = gender_model(selfie_cv2)
+        classes = results[0].boxes.cls.cpu().numpy()
+        if len(classes) == 0:
+            gender = "Unknown"
+        else:
+            gender = "MEN" if int(classes[0]) == 0 else "WOMEN"
     st.markdown(f"*Detected Gender:* {gender}")
 
     # 👕 Step 2: Detect Body Type
